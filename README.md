@@ -1,6 +1,5 @@
-# frases480
-
-Frases 480
+# Frases 480 - Mobile APP (Flutter)
+Frases 480 is a project that aims to create a crowdsourced database of phrases.
 
 ## Getting Started
 
