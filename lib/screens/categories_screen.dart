@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frases480/services/category.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:frases480/widgets/nav_drawer.dart';
 
 class CategoriesScreen extends StatefulWidget {
+  static const String routeName = '/categories';
+
   @override
   _CategoriesScreen createState() => _CategoriesScreen();
 }
@@ -32,6 +35,7 @@ class _CategoriesScreen extends State<CategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: NavDrawer(),
         appBar: AppBar(
           title: Text("Categorías"),
         ),
