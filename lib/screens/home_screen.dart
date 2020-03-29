@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body:  phrases == null || phrases.length == 0
             ? isLoading ? Center(
           child: SpinKitDoubleBounce(
-            color: Colors.white,
+            color: Colors.black,
             size: 100.0,
           ),)
             : Center (child: Text("Sin frases disponibles"))

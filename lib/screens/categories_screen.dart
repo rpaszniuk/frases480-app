@@ -42,7 +42,7 @@ class _CategoriesScreen extends State<CategoriesScreen> {
         body: categories == null || categories.length == 0
             ? isLoading ? Center(
               child: SpinKitDoubleBounce(
-                color: Colors.white,
+                color: Colors.black,
                 size: 100.0,
               ),)
             : Center (child: Text("Sin categorías disponibles"))

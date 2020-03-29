@@ -1,3 +1,4 @@
+import 'package:frases480/services/category.dart';
 import 'package:frases480/services/networking.dart';
 import 'dart:convert';
 
@@ -7,17 +8,17 @@ class Phrase {
   final int id;
   final String phrase;
   final String slug;
-  final int categoryId;
+  final Category category;
   final String status;
 
-  Phrase({this.id, this.phrase, this.slug, this.categoryId, this.status});
+  Phrase({this.id, this.phrase, this.slug, this.category, this.status});
 
   factory Phrase.fromJson(Map<String, dynamic> json) {
     return Phrase(
       id: json['id'],
       phrase: json['phrase'],
       slug: json['slug'],
-      categoryId: json['category_id'],
+      category: Category.fromJson(json['category']),
       status: json['status'],
     );
   }
