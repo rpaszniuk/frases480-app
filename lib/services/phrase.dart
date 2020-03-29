@@ -9,9 +9,10 @@ class Phrase {
   final String phrase;
   final String slug;
   final Category category;
+  final String url;
   final String status;
 
-  Phrase({this.id, this.phrase, this.slug, this.category, this.status});
+  Phrase({this.id, this.phrase, this.slug, this.category, this.url, this.status});
 
   factory Phrase.fromJson(Map<String, dynamic> json) {
     return Phrase(
@@ -19,6 +20,7 @@ class Phrase {
       phrase: json['phrase'],
       slug: json['slug'],
       category: Category.fromJson(json['category']),
+      url: json['url'],
       status: json['status'],
     );
   }

@@ -48,10 +48,15 @@ class _CategoriesScreen extends State<CategoriesScreen> {
             : Center (child: Text("Sin categorías disponibles"))
             : ListView.builder(
             itemCount: categories.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                contentPadding: EdgeInsets.all(10.0),
-                title: new Text(categories[index].name),
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
+                child: Card(
+                  child: ListTile(
+                    onTap: () {},
+                    title: Text(categories[index].name),
+                  ),
+                ),
               );
             })
     );

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:frases480/services/phrase.dart';
 import 'package:frases480/widgets/nav_drawer.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:share/share.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = '/home';
@@ -56,10 +58,41 @@ class _HomeScreenState extends State<HomeScreen> {
             : Center (child: Text("Sin frases disponibles"))
             : ListView.builder(
             itemCount: phrases.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                contentPadding: EdgeInsets.all(10.0),
-                title: new Text(phrases[index].phrase),
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
+                child: Card(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
+                        title: Text("Frase de " + phrases[index].category.name),
+                        subtitle: Padding(padding: EdgeInsets.only(top: 10), child: Text(phrases[index].phrase)),
+                      ),
+                      ButtonBar(
+                        children: <Widget>[
+                          FlatButton(
+                            child:  Icon(Icons.web),
+                            onPressed: () {
+                              var url = phrases[index].url;
+                              if (canLaunch(url) != null) {
+                               launch(url, forceSafariVC: false);
+                              } else {
+                                throw 'No se puede abrir navegador, por favor visitar: $url';
+                              }
+                            },
+                          ),
+                          FlatButton(
+                            child: Icon(Icons.share),
+                            onPressed: () {
+                              Share.share(phrases[index].phrase + ' ' + phrases[index].url);
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               );
             })
     );
