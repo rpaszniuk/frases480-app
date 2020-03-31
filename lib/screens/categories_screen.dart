@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frases480/services/category.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frases480/widgets/nav_drawer.dart';
+import 'package:frases480/widgets/loader.dart';
 
 class CategoriesScreen extends StatefulWidget {
   static const String routeName = '/categories';
@@ -40,11 +40,7 @@ class _CategoriesScreen extends State<CategoriesScreen> {
           title: Text("Categorías"),
         ),
         body: categories == null || categories.length == 0
-            ? isLoading ? Center(
-              child: SpinKitDoubleBounce(
-                color: Colors.black,
-                size: 100.0,
-              ),)
+            ? isLoading ? Loader()
             : Center (child: Text("Sin categorías disponibles"))
             : ListView.builder(
             itemCount: categories.length,
