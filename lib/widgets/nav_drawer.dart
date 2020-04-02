@@ -18,7 +18,7 @@ class NavDrawer extends StatelessWidget {
                 color: Colors.blue,),
           ),
           ListTile(
-            leading: Icon(Icons.input),
+            leading: Icon(Icons.home),
             title: Text('Inicio'),
             onTap: () => {Navigator.pushReplacementNamed(context, Routes.home)},
           ),
