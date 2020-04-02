@@ -1,4 +1,5 @@
 import 'package:frases480/services/networking.dart';
+import 'package:frases480/services/phrase.dart';
 import 'dart:convert';
 
 const URL = '/categories';
@@ -22,12 +23,14 @@ class Category {
     );
   }
 
-  Future<Category> fetch(int id) async {
+  Future<List<Phrase>> fetch(int id) async {
     NetworkHelper networkHelper = NetworkHelper("$URL/$id");
     final response = await networkHelper.get();
 
     if (response.statusCode == 200) {
-      return Category.fromJson(json.decode(response.body));
+      return (json.decode(response.body)['data'] as List)
+          .map((data) => new Phrase.fromJson(data))
+          .toList();
     } else {
       return null;
     }

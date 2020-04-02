@@ -19,7 +19,7 @@ class Phrase {
       id: json['id'],
       phrase: json['phrase'],
       slug: json['slug'],
-      category: Category.fromJson(json['category']),
+      category: json['category'] == null ? null : Category.fromJson(json['category']),
       url: json['url'],
       status: json['status'],
     );

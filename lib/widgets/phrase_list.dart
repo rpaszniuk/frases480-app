@@ -12,7 +12,7 @@ class PhraseList extends StatelessWidget {
         itemCount: phrases.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4.0),
+            padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
             child: PhraseCard(phrases[index]),
           );
         });

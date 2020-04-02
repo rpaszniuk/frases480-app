@@ -13,7 +13,10 @@ class PhraseCard extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          ListTile(
+          phrase.category == null ? ListTile(
+            title: Text(phrase.phrase)
+          )
+              : ListTile(
             title: Text("Frase de " + phrase.category.name),
             subtitle: Padding(padding: EdgeInsets.only(top: 10), child: Text(phrase.phrase)),
           ),

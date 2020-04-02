@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frases480/services/category.dart';
 import 'package:frases480/widgets/nav_drawer.dart';
 import 'package:frases480/widgets/loader.dart';
+import 'package:frases480/routes/routes.dart';
 
 class CategoriesScreen extends StatefulWidget {
   static const String routeName = '/categories';
@@ -46,10 +47,10 @@ class _CategoriesScreen extends State<CategoriesScreen> {
             itemCount: categories.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
+                padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
                 child: Card(
                   child: ListTile(
-                    onTap: () {},
+                    onTap: () {Navigator.pushNamed(context, Routes.category, arguments: categories[index]);},
                     title: Text(categories[index].name),
                   ),
                 ),
