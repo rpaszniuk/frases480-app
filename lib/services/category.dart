@@ -2,7 +2,7 @@ import 'package:frases480/services/networking.dart';
 import 'package:frases480/services/phrase.dart';
 import 'dart:convert';
 
-const URL = '/categories';
+const categoriesURL = '/categories';
 
 class Category {
   final int id;
@@ -24,7 +24,7 @@ class Category {
   }
 
   Future<List<Phrase>> fetch(int id) async {
-    NetworkHelper networkHelper = NetworkHelper("$URL/$id");
+    NetworkHelper networkHelper = NetworkHelper("$categoriesURL/$id");
     final response = await networkHelper.get();
 
     if (response.statusCode == 200) {
@@ -37,7 +37,7 @@ class Category {
   }
 
   Future<List<Category>> fetchAll() async {
-    NetworkHelper networkHelper = NetworkHelper(URL);
+    NetworkHelper networkHelper = NetworkHelper(categoriesURL);
     final response = await networkHelper.get();
 
     if (response.statusCode == 200) {

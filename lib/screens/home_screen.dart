@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frases480/services/pagination.dart';
 import 'package:frases480/services/phrase.dart';
 import 'package:frases480/widgets/nav_drawer.dart';
 import 'package:frases480/widgets/phrase_list.dart';
@@ -13,7 +14,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Phrase> phrases = List();
-  var isLoading = false;
+  Pagination pagination;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -26,10 +28,15 @@ class _HomeScreenState extends State<HomeScreen> {
       isLoading = true;
     });
 
-    var array = await Phrase().fetchAll();
+    var object = await PhrasesWithPagination().fetchAll(pagination == null || pagination.nextPage == null ? 1 : pagination.nextPage);
     setState(() {
       isLoading = false;
-      phrases = array;
+      pagination = object.pagination;
+      if (phrases.length == 0) {
+        phrases = object.phrases;
+      } else {
+        phrases.addAll(object.phrases);
+      }
     });
   }
 
@@ -40,10 +47,37 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           title: Text("Frases"),
         ),
-        body:  phrases == null || phrases.length == 0
-            ? isLoading ? Loader()
-            : Center (child: Text("Sin frases disponibles"))
-            : PhraseList(phrases)
+        body:  _buildPaginatedListView()
+    );
+  }
+
+  Widget _buildPaginatedListView() {
+    return Column(
+      children: <Widget>[
+        Expanded(
+            child: NotificationListener<ScrollNotification>(
+              // ignore: missing_return
+              onNotification: (ScrollNotification scrollInfo) {
+                if (!isLoading && scrollInfo.metrics.pixels ==
+                    scrollInfo.metrics.maxScrollExtent && (pagination != null && pagination.nextPage != null)) {
+                  this.getPhrases();
+                  // start loading data
+                  setState(() {
+                    isLoading = true;
+                  });
+                }
+              },
+              child: phrases == null || phrases.length == 0
+                  ? isLoading ? Loader() : Center(child: Text("Sin frases disponibles"))
+                  : PhraseList(phrases),
+            )
+        ),
+        Container(
+          height: isLoading ? 50.0 : 0,
+          color: Colors.white,
+          child: phrases == null || phrases.length == 0 ? null : Loader(),
+        ),
+      ],
     );
   }
 }
