@@ -13,13 +13,24 @@ class CategoriesScreen extends StatefulWidget {
 
 class _CategoriesScreen extends State<CategoriesScreen> {
   List<Category> categories = List();
+  List<Category> filteredCategories = List();
   String message;
-  var isLoading = false;
+  bool isLoading = false;
+  bool isSearching = false;
 
   @override
   void initState() {
     super.initState();
     getCategories();
+  }
+
+  void _filterCategories(value) {
+    setState(() {
+      filteredCategories = categories
+          .where((category) =>
+          category.name.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    });
   }
 
   void getCategories() async {
@@ -29,7 +40,7 @@ class _CategoriesScreen extends State<CategoriesScreen> {
     var array = await Category().fetchAll();
     setState(() {
       isLoading = false;
-      categories = array;
+      categories = filteredCategories = array;
     });
   }
 
@@ -38,20 +49,54 @@ class _CategoriesScreen extends State<CategoriesScreen> {
     return Scaffold(
         drawer: NavDrawer(),
         appBar: AppBar(
-          title: Text("Categorías"),
+          title: !isSearching
+              ? Text('Categorías')
+              : TextField(
+            onChanged: (value) {
+              _filterCategories(value);
+            },
+            style: TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.white,
+                ),
+                hintText: "Buscar...",
+                hintStyle: TextStyle(color: Colors.white)),
+          ),
+          actions: <Widget>[
+            isSearching
+                ? IconButton(
+              icon: Icon(Icons.cancel),
+              onPressed: () {
+                setState(() {
+                  this.isSearching = false;
+                  filteredCategories = categories;
+                });
+              },
+            )
+                : IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                setState(() {
+                  this.isSearching = true;
+                });
+              },
+            )
+          ],
         ),
-        body: categories == null || categories.length == 0
+        body: filteredCategories.length == 0
             ? isLoading ? Loader()
             : Center (child: Text("Sin categorías disponibles"))
             : ListView.builder(
-            itemCount: categories.length,
+            itemCount: filteredCategories.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
                 child: Card(
                   child: ListTile(
-                    onTap: () {Navigator.pushNamed(context, Routes.category, arguments: categories[index]);},
-                    title: Text(categories[index].name),
+                    onTap: () {Navigator.pushNamed(context, Routes.category, arguments: filteredCategories[index]);},
+                    title: Text(filteredCategories[index].name),
                   ),
                 ),
               );

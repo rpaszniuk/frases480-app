@@ -16,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Phrase> phrases = List();
   Pagination pagination;
   bool isLoading = false;
+  bool isSearching = false;
 
   @override
   void initState() {
@@ -23,12 +24,12 @@ class _HomeScreenState extends State<HomeScreen> {
     getPhrases();
   }
 
-  void getPhrases() async {
+  void getPhrases({term : ''}) async {
     setState(() {
       isLoading = true;
     });
 
-    var object = await PhrasesWithPagination().fetchAll(pagination == null || pagination.nextPage == null ? 1 : pagination.nextPage);
+    var object = await PhrasesWithPagination().fetchAll(pagination == null || pagination.nextPage == null ? 1 : pagination.nextPage, term);
     setState(() {
       isLoading = false;
       pagination = object.pagination;
@@ -45,7 +46,45 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         drawer: NavDrawer(),
         appBar: AppBar(
-          title: Text("Frases"),
+          title: !isSearching
+              ? Text('Frases')
+              : TextField(
+            onChanged: (value) {
+              phrases = [];
+              pagination = null;
+              getPhrases(term: value);
+            },
+            style: TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.white,
+                ),
+                hintText: "Buscar...",
+                hintStyle: TextStyle(color: Colors.white)),
+          ),
+          actions: <Widget>[
+            isSearching
+                ? IconButton(
+              icon: Icon(Icons.cancel),
+              onPressed: () {
+                setState(() {
+                  isSearching = false;
+                  phrases = [];
+                  pagination = null;
+                  getPhrases();
+                });
+              },
+            )
+                : IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                setState(() {
+                  this.isSearching = true;
+                });
+              },
+            )
+          ],
         ),
         body:  _buildPaginatedListView()
     );
@@ -67,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 }
               },
-              child: phrases == null || phrases.length == 0
+              child: phrases.length == 0
                   ? isLoading ? Loader() : Center(child: Text("Sin frases disponibles"))
                   : PhraseList(phrases),
             )
@@ -75,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Container(
           height: isLoading ? 50.0 : 0,
           color: Colors.white,
-          child: phrases == null || phrases.length == 0 ? null : Loader(),
+          child: phrases.length == 0 ? null : Loader(),
         ),
       ],
     );

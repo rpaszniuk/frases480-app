@@ -42,8 +42,8 @@ class PhrasesWithPagination {
     );
   }
 
-  Future<PhrasesWithPagination> fetchAll(int page) async {
-    NetworkHelper networkHelper = NetworkHelper("$phrasesURL?page=$page");
+  Future<PhrasesWithPagination> fetchAll(int page, String term) async {
+    NetworkHelper networkHelper = NetworkHelper("$phrasesURL?page=$page&q=$term");
     final response = await networkHelper.get();
 
     if (response.statusCode == 200) {
