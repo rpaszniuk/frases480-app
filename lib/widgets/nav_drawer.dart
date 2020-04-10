@@ -10,10 +10,10 @@ class NavDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text(
+            child: Center(child: Text(
               'Frases 480',
               style: TextStyle(color: Colors.white, fontSize: 25),
-            ),
+            )),
             decoration: BoxDecoration(
                 color: Colors.blue,),
           ),

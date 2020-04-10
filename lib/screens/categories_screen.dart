@@ -89,6 +89,7 @@ class _CategoriesScreen extends State<CategoriesScreen> {
             ? isLoading ? Loader()
             : Center (child: Text("Sin categorías disponibles"))
             : ListView.builder(
+            padding: EdgeInsets.only(top: 10),
             itemCount: filteredCategories.length,
             itemBuilder: (context, index) {
               return Padding(

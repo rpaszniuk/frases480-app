@@ -9,6 +9,7 @@ class PhraseList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+        padding: EdgeInsets.only(top: 10),
         itemCount: phrases.length,
         itemBuilder: (context, index) {
           return Padding(
