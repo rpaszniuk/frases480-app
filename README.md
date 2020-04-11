@@ -18,7 +18,6 @@ git clone https://github.com/rpaszniuk/frases480-app.git
 flutter pub get
 ```
 
-* Choose an editor: https://flutter.dev/docs/get-started/editor (Recommended: Android Studio)
 * Create secrets.json file, inside the app root directory:
 
 ```
@@ -27,6 +26,7 @@ flutter pub get
   "base_url": ""
 }
 ```
+* Choose an editor: https://flutter.dev/docs/get-started/editor
 * Run (https://flutter.dev/docs/get-started/test-drive)
 
 ## Optional
