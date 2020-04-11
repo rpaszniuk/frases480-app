@@ -1,18 +1,45 @@
-# Frases 480 - Mobile APP (Flutter)
-Frases 480 is a project that aims to create a crowdsourced database of phrases.
+# Frases 480 - Flutter App
+About Frases 480: is a project that aims to create a crowdsourced database of phrases.
 
-## Getting Started
+Platform repository and extra information: https://github.com/rpaszniuk/frases480.git
 
-This project is a starting point for a Flutter application.
+## App Demo
+* Android: https://play.google.com/store/apps/details?id=com.frases480
+* iOS: Coming soon
+* Web: Coming soon
 
-A few resources to get you started if this is your first Flutter project:
+### Main Requirements
+* Flutter (with Dart) 1.12+ (https://flutter.dev/docs/get-started/install)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Instructions
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```
+git clone https://github.com/rpaszniuk/frases480-app.git
+flutter pub get
+```
+
+* Choose an editor: https://flutter.dev/docs/get-started/editor (Recommended: Android Studio)
+* Create secrets.json file, inside the app root directory:
+
+```
+{
+  "api_secret": "",
+  "base_url": ""
+}
+```
+* Run (https://flutter.dev/docs/get-started/test-drive)
+
+## Optional
+
+Create google-services.json file inside the android and iOS projects, to enable firebase (analytics, crashlytics and messaging)
+
+## TODO
+
+- Sign Up
+- Login
+- Phrases CRUD
+- Create web app
+- Create iOS app and upload to the App Store 
 
 ## Contributing
 
