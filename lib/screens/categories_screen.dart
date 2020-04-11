@@ -40,7 +40,9 @@ class _CategoriesScreen extends State<CategoriesScreen> {
     var array = await Category().fetchAll();
     setState(() {
       isLoading = false;
-      categories = filteredCategories = array;
+      if (array != null) {
+        categories = filteredCategories = array;
+      }
     });
   }
 

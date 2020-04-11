@@ -44,22 +44,31 @@ class PhrasesWithPagination {
 
   Future<PhrasesWithPagination> fetchAll(int page, String term) async {
     NetworkHelper networkHelper = NetworkHelper("$phrasesURL?page=$page&q=$term");
-    final response = await networkHelper.get();
+    try {
+      final response = await networkHelper.get();
 
-    if (response.statusCode == 200) {
-      return PhrasesWithPagination.fromJson(json.decode(response.body));
-    } else {
+      if (response.statusCode == 200) {
+        return PhrasesWithPagination.fromJson(json.decode(response.body));
+      } else {
+        return null;
+      }
+    } catch (_) {
       return null;
     }
   }
 
   Future<PhrasesWithPagination> fetchAllByCategory(int categoryId, int page) async {
-    NetworkHelper networkHelper = NetworkHelper("$categoriesURL/$categoryId?page=$page");
-    final response = await networkHelper.get();
+    try {
+      NetworkHelper networkHelper = NetworkHelper(
+          "$categoriesURL/$categoryId?page=$page");
+      final response = await networkHelper.get();
 
-    if (response.statusCode == 200) {
-      return PhrasesWithPagination.fromJson(json.decode(response.body));
-    } else {
+      if (response.statusCode == 200) {
+        return PhrasesWithPagination.fromJson(json.decode(response.body));
+      } else {
+        return null;
+      }
+    } catch (_) {
       return null;
     }
   }

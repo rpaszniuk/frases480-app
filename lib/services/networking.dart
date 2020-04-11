@@ -16,7 +16,7 @@ class NetworkHelper {
 
     Future<http.Response> get() async {
         await loadSecrets();
-        return await http.get(baseUrl + path, headers: headers);
+        return await http.get(baseUrl + path, headers: headers).timeout(const Duration(seconds: 10));
     }
 
     Future<http.Response> post(Map<String, dynamic>  params) async {
@@ -25,7 +25,7 @@ class NetworkHelper {
             baseUrl + path,
             headers: headers,
             body: jsonEncode(params)
-        );
+        ).timeout(const Duration(seconds: 10));
     }
 
     Future loadSecrets() {

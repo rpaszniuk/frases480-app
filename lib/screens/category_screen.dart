@@ -34,11 +34,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
     var object = await PhrasesWithPagination().fetchAllByCategory(id, pagination == null || pagination.nextPage == null ? 1 : pagination.nextPage);
     setState(() {
       isLoading = false;
-      pagination = object.pagination;
-      if (phrases.length == 0) {
-        phrases = object.phrases;
-      } else {
-        phrases.addAll(object.phrases);
+      if (object != null) {
+        pagination = object.pagination;
+        if (phrases.length == 0) {
+          phrases = object.phrases;
+        } else {
+          phrases.addAll(object.phrases);
+        }
       }
     });
   }

@@ -32,11 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
     var object = await PhrasesWithPagination().fetchAll(pagination == null || pagination.nextPage == null ? 1 : pagination.nextPage, term);
     setState(() {
       isLoading = false;
-      pagination = object.pagination;
-      if (phrases.length == 0) {
-        phrases = object.phrases;
-      } else {
-        phrases.addAll(object.phrases);
+      if (object != null) {
+        pagination = object.pagination;
+        if (phrases.length == 0) {
+          phrases = object.phrases;
+        } else {
+          phrases.addAll(object.phrases);
+        }
       }
     });
   }

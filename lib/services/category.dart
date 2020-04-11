@@ -24,27 +24,35 @@ class Category {
   }
 
   Future<List<Phrase>> fetch(int id) async {
-    NetworkHelper networkHelper = NetworkHelper("$categoriesURL/$id");
-    final response = await networkHelper.get();
+    try {
+      NetworkHelper networkHelper = NetworkHelper("$categoriesURL/$id");
+      final response = await networkHelper.get();
 
-    if (response.statusCode == 200) {
-      return (json.decode(response.body)['data'] as List)
-          .map((data) => new Phrase.fromJson(data))
-          .toList();
-    } else {
+      if (response.statusCode == 200) {
+        return (json.decode(response.body)['data'] as List)
+            .map((data) => new Phrase.fromJson(data))
+            .toList();
+      } else {
+        return null;
+      }
+    } catch (_) {
       return null;
     }
   }
 
   Future<List<Category>> fetchAll() async {
-    NetworkHelper networkHelper = NetworkHelper(categoriesURL);
-    final response = await networkHelper.get();
+    try {
+      NetworkHelper networkHelper = NetworkHelper(categoriesURL);
+      final response = await networkHelper.get();
 
-    if (response.statusCode == 200) {
-      return (json.decode(response.body)['data'] as List)
-          .map((data) => new Category.fromJson(data))
-          .toList();
-    } else {
+      if (response.statusCode == 200) {
+        return (json.decode(response.body)['data'] as List)
+            .map((data) => new Category.fromJson(data))
+            .toList();
+      } else {
+        return null;
+      }
+    } catch (_) {
       return null;
     }
   }

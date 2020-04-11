@@ -26,25 +26,33 @@ class Phrase {
   }
 
   Future<Phrase> fetch(int id) async {
-    NetworkHelper networkHelper = NetworkHelper("$phrasesURL/$id");
-    final response = await networkHelper.get();
+    try {
+      NetworkHelper networkHelper = NetworkHelper("$phrasesURL/$id");
+      final response = await networkHelper.get();
 
-    if (response.statusCode == 200) {
-      return Phrase.fromJson(json.decode(response.body));
-    } else {
+      if (response.statusCode == 200) {
+        return Phrase.fromJson(json.decode(response.body));
+      } else {
+        return null;
+      }
+    } catch (_) {
       return null;
     }
   }
 
   Future<List<Phrase>> fetchAll() async {
-    NetworkHelper networkHelper = NetworkHelper(phrasesURL);
-    final response = await networkHelper.get();
+    try {
+      NetworkHelper networkHelper = NetworkHelper(phrasesURL);
+      final response = await networkHelper.get();
 
-    if (response.statusCode == 200) {
-      return (json.decode(response.body)['data'] as List)
-          .map((data) => new Phrase.fromJson(data))
-          .toList();
-    } else {
+      if (response.statusCode == 200) {
+        return (json.decode(response.body)['data'] as List)
+            .map((data) => new Phrase.fromJson(data))
+            .toList();
+      } else {
+        return null;
+      }
+    } catch (_) {
       return null;
     }
   }

@@ -17,7 +17,7 @@ class PhraseCard extends StatelessWidget {
             title: Text(phrase.phrase)
           )
               : ListTile(
-            title: Text("Frase de " + phrase.category.name),
+            title: Padding(padding: EdgeInsets.only(top: 10), child: Text("Frase de " + phrase.category.name)),
             subtitle: Padding(padding: EdgeInsets.only(top: 10), child: Text(phrase.phrase)),
           ),
           ButtonBar(
