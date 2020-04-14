@@ -81,6 +81,7 @@ lib/generated_plugin_registrant.dart
 **/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
+**/ios/Runner/google-services.json
 
 # macOS
 **/macos/Flutter/GeneratedPluginRegistrant.swift
