@@ -4,9 +4,9 @@ About Frases 480: is a project that aims to create a crowdsourced database of ph
 Platform repository and extra information: https://github.com/rpaszniuk/frases480.git
 
 ## App Demo
+* Web: https://app.frases480.com
 * Android: https://play.google.com/store/apps/details?id=com.frases480
 * iOS: Coming soon
-* Web: Coming soon
 
 ### Main Requirements
 * Flutter (with Dart) 1.12+ (https://flutter.dev/docs/get-started/install)
@@ -35,10 +35,10 @@ Create google-services.json file inside the android and iOS projects, to enable 
 
 ## TODO
 
+- ~Create web app~
 - Sign Up
 - Login
 - Phrases CRUD
-- Create web app
 - Create iOS app and upload to the App Store 
 
 ## Contributing
