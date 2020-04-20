@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frases480/services/phrase.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share/share.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class PhraseCard extends StatelessWidget {
   Phrase phrase;
@@ -14,7 +15,7 @@ class PhraseCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           phrase.category == null ? ListTile(
-            title: Text(phrase.phrase)
+            title: Padding(padding: EdgeInsets.only(top: 10), child: Text(phrase.phrase))
           )
               : ListTile(
             title: Padding(padding: EdgeInsets.only(top: 10), child: Text("Frase de " + phrase.category.name)),
@@ -33,7 +34,7 @@ class PhraseCard extends StatelessWidget {
                   }
                 },
               ),
-              FlatButton(
+              kIsWeb ? null : FlatButton(
                 child: Icon(Icons.share),
                 onPressed: () {
                   Share.share(phrase.phrase + ' ' + phrase.url);

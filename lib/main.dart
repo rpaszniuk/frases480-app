@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     FirebaseAnalytics analytics = FirebaseAnalytics();
 
     return MaterialApp(
+      title: "Frases 480",
       theme: ThemeData.light(),
       home: HomeScreen(),
       navigatorObservers: [
