@@ -5,11 +5,11 @@ import 'dart:convert';
 const categoriesURL = '/categories';
 
 class Category {
-  final int id;
-  final String name;
-  final String description;
-  final String slug;
-  final String status;
+  final int? id;
+  final String? name;
+  final String? description;
+  final String? slug;
+  final String? status;
 
   Category({this.id, this.name, this.description, this.slug, this.status});
 
@@ -23,7 +23,7 @@ class Category {
     );
   }
 
-  Future<List<Phrase>> fetch(int id) async {
+  Future<List<Phrase>?> fetch(int id) async {
     try {
       NetworkHelper networkHelper = NetworkHelper("$categoriesURL/$id");
       final response = await networkHelper.get();
@@ -40,7 +40,7 @@ class Category {
     }
   }
 
-  Future<List<Category>> fetchAll() async {
+  Future<List<Category>?> fetchAll() async {
     try {
       NetworkHelper networkHelper = NetworkHelper(categoriesURL);
       final response = await networkHelper.get();

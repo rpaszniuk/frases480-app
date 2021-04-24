@@ -4,14 +4,20 @@ import 'package:frases480/services/networking.dart';
 import 'dart:convert';
 
 class Pagination {
-  final int total;
-  final int perPage;
-  final String next;
-  final String previous;
-  final int nextPage;
-  final int previousPage;
+  final int? total;
+  final int? perPage;
+  final String? next;
+  final String? previous;
+  final int? nextPage;
+  final int? previousPage;
 
-  Pagination({this.total, this.perPage, this.next, this.previous, this.nextPage, this.previousPage});
+  Pagination(
+      {this.total,
+      this.perPage,
+      this.next,
+      this.previous,
+      this.nextPage,
+      this.previousPage});
 
   factory Pagination.fromJson(Map<String, dynamic> json) {
     return Pagination(
@@ -26,8 +32,8 @@ class Pagination {
 }
 
 class PhrasesWithPagination {
-  final List<Phrase> phrases;
-  final Pagination pagination;
+  final List<Phrase>? phrases;
+  final Pagination? pagination;
 
   PhrasesWithPagination({this.phrases, this.pagination});
 
@@ -36,14 +42,12 @@ class PhrasesWithPagination {
         .map((data) => new Phrase.fromJson(data))
         .toList();
     var pagination = Pagination.fromJson(json['meta']);
-    return PhrasesWithPagination(
-      phrases: phrases,
-      pagination: pagination
-    );
+    return PhrasesWithPagination(phrases: phrases, pagination: pagination);
   }
 
-  Future<PhrasesWithPagination> fetchAll(int page, String term) async {
-    NetworkHelper networkHelper = NetworkHelper("$phrasesURL?page=$page&q=$term");
+  Future<PhrasesWithPagination?> fetchAll(int? page, String term) async {
+    NetworkHelper networkHelper =
+        NetworkHelper("$phrasesURL?page=$page&q=$term");
     try {
       final response = await networkHelper.get();
 
@@ -57,10 +61,11 @@ class PhrasesWithPagination {
     }
   }
 
-  Future<PhrasesWithPagination> fetchAllByCategory(int categoryId, int page) async {
+  Future<PhrasesWithPagination?> fetchAllByCategory(
+      int? categoryId, int? page) async {
     try {
-      NetworkHelper networkHelper = NetworkHelper(
-          "$categoriesURL/$categoryId?page=$page");
+      NetworkHelper networkHelper =
+          NetworkHelper("$categoriesURL/$categoryId?page=$page");
       final response = await networkHelper.get();
 
       if (response.statusCode == 200) {

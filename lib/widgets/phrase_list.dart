@@ -3,7 +3,8 @@ import 'package:frases480/services/phrase.dart';
 import 'package:frases480/widgets/phrase_card.dart';
 
 class PhraseList extends StatelessWidget {
-  List<Phrase> phrases;
+  final List<Phrase> phrases;
+
   PhraseList(this.phrases);
 
   @override
@@ -13,7 +14,8 @@ class PhraseList extends StatelessWidget {
         itemCount: phrases.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
             child: PhraseCard(phrases[index]),
           );
         });

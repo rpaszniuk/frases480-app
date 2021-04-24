@@ -13,8 +13,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Phrase> phrases = List();
-  Pagination pagination;
+  List<Phrase> phrases = [];
+  Pagination? pagination;
   bool isLoading = false;
   bool isSearching = false;
 
@@ -29,15 +29,15 @@ class _HomeScreenState extends State<HomeScreen> {
       isLoading = true;
     });
 
-    var object = await PhrasesWithPagination().fetchAll(pagination == null || pagination.nextPage == null ? 1 : pagination.nextPage, term);
+    var object = await PhrasesWithPagination().fetchAll(pagination == null || pagination!.nextPage == null ? 1 : pagination!.nextPage, term);
     setState(() {
       isLoading = false;
       if (object != null) {
         pagination = object.pagination;
         if (phrases.length == 0) {
-          phrases = object.phrases;
+          phrases = object.phrases!;
         } else {
-          phrases.addAll(object.phrases);
+          phrases.addAll(object.phrases!);
         }
       }
     });
@@ -100,13 +100,10 @@ class _HomeScreenState extends State<HomeScreen> {
               // ignore: missing_return
               onNotification: (ScrollNotification scrollInfo) {
                 if (!isLoading && scrollInfo.metrics.pixels ==
-                    scrollInfo.metrics.maxScrollExtent && (pagination != null && pagination.nextPage != null)) {
+                    scrollInfo.metrics.maxScrollExtent && (pagination != null && pagination!.nextPage != null)) {
                   this.getPhrases();
-                  // start loading data
-                  setState(() {
-                    isLoading = true;
-                  });
                 }
+                return false;
               },
               child: phrases.length == 0
                   ? isLoading ? Loader() : Center(child: Text("Sin frases disponibles"))
@@ -116,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Container(
           height: isLoading ? 50.0 : 0,
           color: Colors.white,
-          child: phrases.length == 0 ? null : Loader(),
+          child: phrases.length == 0 ? Text('') : Loader(),
         ),
       ],
     );

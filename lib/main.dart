@@ -5,6 +5,7 @@ import 'package:frases480/routes/routes.dart';
 import 'package:frases480/screens/categories_screen.dart';
 import 'package:frases480/screens/category_screen.dart';
 import 'package:frases480/screens/home_screen.dart';
+import 'package:frases480/services/category.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,11 +21,11 @@ class MyApp extends StatelessWidget {
       navigatorObservers: [
         FirebaseAnalyticsObserver(analytics: analytics),
       ],
-      routes:  {
+      routes: {
         Routes.home: (context) => HomeScreen(),
         Routes.categories: (context) => CategoriesScreen(),
-        Routes.category: (context) =>
-            CategoryScreen(ModalRoute.of(context).settings.arguments),
+        Routes.category: (context) => CategoryScreen(
+            ModalRoute.of(context)!.settings.arguments as Category),
       },
     );
   }

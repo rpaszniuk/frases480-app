@@ -10,12 +10,14 @@ class NavDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Center(child: Text(
+            child: Center(
+                child: Text(
               'Frases 480',
               style: TextStyle(color: Colors.white, fontSize: 25),
             )),
             decoration: BoxDecoration(
-                color: Colors.blue,),
+              color: Colors.blue,
+            ),
           ),
           ListTile(
             leading: Icon(Icons.home),
@@ -25,7 +27,8 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.category),
             title: Text('Categorías'),
-            onTap: () => {Navigator.pushReplacementNamed(context, Routes.categories)},
+            onTap: () =>
+                {Navigator.pushReplacementNamed(context, Routes.categories)},
           ),
           ListTile(
             leading: Icon(Icons.info),

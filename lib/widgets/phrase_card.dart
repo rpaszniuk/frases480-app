@@ -6,7 +6,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 
 class PhraseCard extends StatelessWidget {
-  Phrase phrase;
+  final Phrase phrase;
+
   PhraseCard(this.phrase);
 
   @override
@@ -17,7 +18,7 @@ class PhraseCard extends StatelessWidget {
             Clipboard.setData(ClipboardData(text: phrase.phrase))
                 .catchError((e) {})
                 .whenComplete(() {
-              Scaffold.of(context).showSnackBar(SnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text('Copiado al portapapeles'),
               ));
             });
@@ -26,29 +27,25 @@ class PhraseCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             phrase.category == null ? ListTile(
-                title: Padding(padding: EdgeInsets.only(top: 10), child: Text(phrase.phrase))
+                title: Padding(padding: EdgeInsets.only(top: 10), child: Text(phrase.phrase!))
             )
                 : ListTile(
-              title: Padding(padding: EdgeInsets.only(top: 10), child: Text("Frase de " + phrase.category.name)),
-              subtitle: Padding(padding: EdgeInsets.only(top: 10), child: Text(phrase.phrase)),
+              title: Padding(padding: EdgeInsets.only(top: 10), child: Text("Frase de " + phrase.category!.name!)),
+              subtitle: Padding(padding: EdgeInsets.only(top: 10), child: Text(phrase.phrase!)),
             ),
             ButtonBar(
               children: <Widget>[
-                FlatButton(
+                TextButton(
                   child:  Icon(Icons.web),
                   onPressed: () {
-                    var url = phrase.url;
-                    if (canLaunch(url) != null) {
-                      launch(url, forceSafariVC: false);
-                    } else {
-                      throw 'No se puede abrir navegador, por favor visitar: $url';
-                    }
+                    var url = phrase.url!;
+                    launch(url, forceSafariVC: false);
                   },
                 ),
-                kIsWeb ? null : FlatButton(
+                kIsWeb ? Text('') : TextButton(
                   child: Icon(Icons.share),
                   onPressed: () {
-                    Share.share(phrase.phrase + ' ' + phrase.url);
+                    Share.share(phrase.phrase! + ' ' + phrase.url!);
                   },
                 ),
               ],

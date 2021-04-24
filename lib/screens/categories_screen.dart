@@ -12,9 +12,9 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreen extends State<CategoriesScreen> {
-  List<Category> categories = List();
-  List<Category> filteredCategories = List();
-  String message;
+  List<Category> categories = [];
+  List<Category> filteredCategories = [];
+  String? message;
   bool isLoading = false;
   bool isSearching = false;
 
@@ -28,7 +28,7 @@ class _CategoriesScreen extends State<CategoriesScreen> {
     setState(() {
       filteredCategories = categories
           .where((category) =>
-          category.name.toLowerCase().contains(value.toLowerCase()))
+              category.name!.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -54,56 +54,60 @@ class _CategoriesScreen extends State<CategoriesScreen> {
           title: !isSearching
               ? Text('Categorías')
               : TextField(
-            onChanged: (value) {
-              _filterCategories(value);
-            },
-            style: TextStyle(color: Colors.white),
-            decoration: InputDecoration(
-                icon: Icon(
-                  Icons.search,
-                  color: Colors.white,
+                  onChanged: (value) {
+                    _filterCategories(value);
+                  },
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                      icon: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      ),
+                      hintText: "Buscar...",
+                      hintStyle: TextStyle(color: Colors.white)),
                 ),
-                hintText: "Buscar...",
-                hintStyle: TextStyle(color: Colors.white)),
-          ),
           actions: <Widget>[
             isSearching
                 ? IconButton(
-              icon: Icon(Icons.cancel),
-              onPressed: () {
-                setState(() {
-                  this.isSearching = false;
-                  filteredCategories = categories;
-                });
-              },
-            )
+                    icon: Icon(Icons.cancel),
+                    onPressed: () {
+                      setState(() {
+                        this.isSearching = false;
+                        filteredCategories = categories;
+                      });
+                    },
+                  )
                 : IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                setState(() {
-                  this.isSearching = true;
-                });
-              },
-            )
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      setState(() {
+                        this.isSearching = true;
+                      });
+                    },
+                  )
           ],
         ),
         body: filteredCategories.length == 0
-            ? isLoading ? Loader()
-            : Center (child: Text("Sin categorías disponibles"))
+            ? isLoading
+                ? Loader()
+                : Center(child: Text("Sin categorías disponibles"))
             : ListView.builder(
-            padding: EdgeInsets.only(top: 10),
-            itemCount: filteredCategories.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
-                child: Card(
-                  child: ListTile(
-                    onTap: () {Navigator.pushNamed(context, Routes.category, arguments: filteredCategories[index]);},
-                    title: Text(filteredCategories[index].name),
-                  ),
-                ),
-              );
-            })
-    );
+                padding: EdgeInsets.only(top: 10),
+                itemCount: filteredCategories.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 2.0, horizontal: 10.0),
+                    child: Card(
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.category,
+                              arguments: filteredCategories[index]);
+                        },
+                        title: Text(filteredCategories[index].name!),
+                      ),
+                    ),
+                  );
+                }));
   }
 }

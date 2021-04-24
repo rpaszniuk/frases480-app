@@ -5,27 +5,29 @@ import 'dart:convert';
 const phrasesURL = '/phrases';
 
 class Phrase {
-  final int id;
-  final String phrase;
-  final String slug;
-  final Category category;
-  final String url;
-  final String status;
+  final int? id;
+  final String? phrase;
+  final String? slug;
+  final Category? category;
+  final String? url;
+  final String? status;
 
-  Phrase({this.id, this.phrase, this.slug, this.category, this.url, this.status});
+  Phrase(
+      {this.id, this.phrase, this.slug, this.category, this.url, this.status});
 
   factory Phrase.fromJson(Map<String, dynamic> json) {
     return Phrase(
       id: json['id'],
       phrase: json['phrase'],
       slug: json['slug'],
-      category: json['category'] == null ? null : Category.fromJson(json['category']),
+      category:
+          json['category'] == null ? null : Category.fromJson(json['category']),
       url: json['url'],
       status: json['status'],
     );
   }
 
-  Future<Phrase> fetch(int id) async {
+  Future<Phrase?> fetch(int id) async {
     try {
       NetworkHelper networkHelper = NetworkHelper("$phrasesURL/$id");
       final response = await networkHelper.get();
@@ -40,7 +42,7 @@ class Phrase {
     }
   }
 
-  Future<List<Phrase>> fetchAll() async {
+  Future<List<Phrase>?> fetchAll() async {
     try {
       NetworkHelper networkHelper = NetworkHelper(phrasesURL);
       final response = await networkHelper.get();

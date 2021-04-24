@@ -16,8 +16,8 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  List<Phrase> phrases = List();
-  Pagination pagination;
+  List<Phrase> phrases = [];
+  Pagination? pagination;
   var isLoading = false;
 
   @override
@@ -26,20 +26,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
     getCategory(widget.category.id);
   }
 
-  void getCategory(int id) async {
+  void getCategory(int? id) async {
     setState(() {
       isLoading = true;
     });
 
-    var object = await PhrasesWithPagination().fetchAllByCategory(id, pagination == null || pagination.nextPage == null ? 1 : pagination.nextPage);
+    var object = await PhrasesWithPagination().fetchAllByCategory(id, pagination == null || pagination!.nextPage == null ? 1 : pagination!.nextPage);
     setState(() {
       isLoading = false;
       if (object != null) {
         pagination = object.pagination;
         if (phrases.length == 0) {
-          phrases = object.phrases;
+          phrases = object.phrases!;
         } else {
-          phrases.addAll(object.phrases);
+          phrases.addAll(object.phrases!);
         }
       }
     });
@@ -49,7 +49,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.category.name),
+          title: Text(widget.category.name!),
         ),
         body:  _buildPaginatedListView()
     );
@@ -63,15 +63,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
               // ignore: missing_return
               onNotification: (ScrollNotification scrollInfo) {
                 if (!isLoading && scrollInfo.metrics.pixels ==
-                    scrollInfo.metrics.maxScrollExtent && (pagination != null && pagination.nextPage != null)) {
+                    scrollInfo.metrics.maxScrollExtent && (pagination != null && pagination!.nextPage != null)) {
                   this.getCategory(widget.category.id);
                   // start loading data
                   setState(() {
                     isLoading = true;
                   });
                 }
+                return false;
               },
-              child: phrases == null || phrases.length == 0
+              child: phrases.length == 0
                   ? isLoading ? Loader() : Center(child: Text("Sin frases disponibles"))
                   : PhraseList(phrases),
             )
@@ -79,7 +80,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         Container(
           height: isLoading ? 50.0 : 0,
           color: Colors.white,
-          child: phrases == null || phrases.length == 0 ? null : Loader(),
+          child: phrases.length == 0 ? Text('') : Loader(),
         ),
       ],
     );
